@@ -1,6 +1,10 @@
 import utime
+from machine import Pin
 
 class PCA9685:
+    __sda = Pin(0)
+    __scl = Pin(1)
+
     def __init__(self, i2c, address=0x40):
         self.i2c = i2c
         self.address = address

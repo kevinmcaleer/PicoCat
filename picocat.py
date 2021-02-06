@@ -4,6 +4,7 @@
 
 from time import sleep
 from machine import PWM, Pin
+from utils import PCA9865
 
 def map(x, in_min, in_max, out_min, out_max):
     return int((x-in_min) * (out_max-out_min) / (in_max - in_min) + out_min)
@@ -65,7 +66,9 @@ class Servo():
 
 
 
+
 s = Servo()
+
 s.name = "Neck"
 s.angle = 10
 sleep(0.5)
@@ -73,3 +76,4 @@ s.angle = 180
 sleep(0.5)
 s.angle = 90
 sleep(0.5)
+
