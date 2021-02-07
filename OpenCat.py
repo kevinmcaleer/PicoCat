@@ -186,7 +186,7 @@ class Servo():
     def target_angle(self, value):
         if value <= self.__max_angle and value >= self.__min_angle:
             self.__target_angle = value
-            print("target angle set to:, ", self.__target_angle)
+            print("target angle set to: ", self.__target_angle)
         else:
             print("Target Angle out of range - Min:", self.__min_angle, " Max: ", self.__max_angle, " angle provided: ", value)
 
@@ -223,60 +223,59 @@ class Servo():
         valid_transition = False
         # print("transition type is: ", self.__transition)
         if self.__transition == 'linear_tween':
-            cur_angle = Transition.linear_tween(current_time=self.elapsed_time,
+            cur_angle = Transition().linear_tween(current_time=self.elapsed_time,
                          start_value=self.start_angle,
                          change_in_value=self.change_in_value,
                          duration=self.duration)
             valid_transition = True
         if self.__transition == 'ease_in_circ':
-            cur_angle = Transition.ease_in_circ(current_time=self.elapsed_time,
+            cur_angle = Transition().ease_in_circ(current_time=self.elapsed_time,
                          start_value=self.start_angle,
                          change_in_value=self.change_in_value,
                          duration=self.duration)
             valid_transition = True
         if self.__transition == 'ease_in_cubic':
-            cur_angle = Transition.ease_in_cubic(current_time=self.elapsed_time,
+            cur_angle = Transition().ease_in_cubic(current_time=self.elapsed_time,
                          start_value=self.start_angle,
                          change_in_value=self.change_in_value,
                          duration=self.duration)
             valid_transition = True
         if self.__transition == 'ease_in_quad':
-            cur_angle = Transition.ease_in_quad(current_time=self.elapsed_time,
+            cur_angle = Transition().ease_in_quad(current_time=self.elapsed_time,
                          start_value=self.start_angle,
                          change_in_value=self.change_in_value,
                          duration=self.duration)
             valid_transition = True
         if self.__transition == 'ease_in_quart':
-            cur_angle = Transition.ease_in_quart(current_time=self.elapsed_time,
+            cur_angle = Transition().ease_in_quart(current_time=self.elapsed_time,
                          start_value=self.start_angle,
                          change_in_value=self.change_in_value,
                          duration=self.duration)
             valid_transition = True
         if self.__transition == 'ease_in_expo':
-            cur_angle = Transition.ease_in_expo(current_time=self.elapsed_time,
+            cur_angle = Transition().ease_in_expo(current_time=self.elapsed_time,
                          start_value=self.start_angle,
                          change_in_value=self.change_in_value,
                          duration=self.duration)
             valid_transition = True
         if self.__transition == 'ease_in_quart':
-            cur_angle = Transition.ease_in_quart(current_time=self.elapsed_time,
+            cur_angle = Transition().ease_in_quart(current_time=self.elapsed_time,
                          start_value=self.start_angle,
                          change_in_value=self.change_in_value,
                          duration=self.duration)
             valid_transition = True
         if self.__transition == 'ease_in_quint':
-            cur_angle = Transition.ease_in_quint(current_time=self.elapsed_time,
+            cur_angle = Transition().ease_in_quint(current_time=self.elapsed_time,
                          start_value=self.start_angle,
                          change_in_value=self.change_in_value,
                          duration=self.duration)       
             valid_transition = True         
         if self.__transition == 'ease_in_sine':
-            cur_angle = Transition.ease_in_sine(current_time=self.elapsed_time,
+            cur_angle = Transition().ease_in_sine(current_time=self.elapsed_time,
                          start_value=self.start_angle,
                          change_in_value=self.change_in_value,
                          duration=self.duration)
             valid_transition = True
-
         if not valid_transition:
             print("error - No Valid Transition provided")
         # print(self.name, int(cur_angle))
@@ -309,8 +308,8 @@ class Leg():
         print("standing up leg", self.name)
         self.shoulder.transition = 'ease_in_sine'
         self.foot.transition = 'ease_in_sine'
-        self.shoulder.duration_in_seconds = 2 
-        self.foot.duration_in_seconds = 2
+        self.shoulder.duration_in_seconds = 0.5 
+        self.foot.duration_in_seconds = 0.5
         self.shoulder.target_angle = 180
         self.foot.target_angle = 180
         self.shoulder.start_angle = 90
