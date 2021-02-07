@@ -4,8 +4,9 @@
 
 from machine import Pin, PWM
 from time import sleep, time, ticks_us
-from utils import ease_in_circ, ease_in_cubic, ease_in_expo, ease_in_out_circ, ease_in_out_cubic, ease_in_out_expo, ease_in_out_quad, ease_in_out_quart, ease_in_out_quint, ease_in_out_sine, ease_in_quad, ease_in_quart, ease_in_sine, ease_out_circ, ease_out_cubic, ease_out_expo, ease_out_quad, ease_out_quart, ease_out_quint, ease_out_sine, linear_tween, ease_in_quint
+# from utils import ease_in_circ, ease_in_cubic, ease_in_expo, ease_in_out_circ, ease_in_out_cubic, ease_in_out_expo, ease_in_out_quad, ease_in_out_quart, ease_in_out_quint, ease_in_out_sine, ease_in_quad, ease_in_quart, ease_in_sine, ease_out_circ, ease_out_cubic, ease_out_expo, ease_out_quad, ease_out_quart, ease_out_quint, ease_out_sine, linear_tween, ease_in_quint
 from utils import PCA9685
+from transition import Transition
 
 class Limbs():
     """
@@ -22,34 +23,6 @@ class Limbs():
     TAIL = 8
     NECK = 9
     HEAD = 10
-
-class Transition():
-    linear_tween = 0
-    ease_in_circ = 0
-    ease_in_cubic = 1
-    ease_in_expo = 2
-    ease_in_quad = 3
-    ease_in_quart = 4
-    ease_in_quint = 5
-    ease_in_sine = 6
-
-    ease_in_out_circ = 7
-    ease_in_out_cubic = 8
-    ease_in_out_expo = 9
-    ease_in_out_quad = 10
-    ease_in_out_quart = 11
-    ease_in_out_quint = 12
-    ease_in_out_sine = 13
-
-    ease_out_circ = 14
-    ease_out_cubic = 15
-    ease_out_expo = 16
-    ease_out_quad = 17
-    ease_out_quart = 18
-    ease_out_quint = 19 
-    ease_out_sine = 20
-    
-
 
 def map(x, in_min, in_max, out_min, out_max):
     # if x == 0:
@@ -250,55 +223,55 @@ class Servo():
         valid_transition = False
         # print("transition type is: ", self.__transition)
         if self.__transition == 'linear_tween':
-            cur_angle = linear_tween(current_time=self.elapsed_time,
+            cur_angle = Transition.linear_tween(current_time=self.elapsed_time,
                          start_value=self.start_angle,
                          change_in_value=self.change_in_value,
                          duration=self.duration)
             valid_transition = True
         if self.__transition == 'ease_in_circ':
-            cur_angle = ease_in_circ(current_time=self.elapsed_time,
+            cur_angle = Transition.ease_in_circ(current_time=self.elapsed_time,
                          start_value=self.start_angle,
                          change_in_value=self.change_in_value,
                          duration=self.duration)
             valid_transition = True
         if self.__transition == 'ease_in_cubic':
-            cur_angle = ease_in_cubic(current_time=self.elapsed_time,
+            cur_angle = Transition.ease_in_cubic(current_time=self.elapsed_time,
                          start_value=self.start_angle,
                          change_in_value=self.change_in_value,
                          duration=self.duration)
             valid_transition = True
         if self.__transition == 'ease_in_quad':
-            cur_angle = ease_in_quad(current_time=self.elapsed_time,
+            cur_angle = Transition.ease_in_quad(current_time=self.elapsed_time,
                          start_value=self.start_angle,
                          change_in_value=self.change_in_value,
                          duration=self.duration)
             valid_transition = True
         if self.__transition == 'ease_in_quart':
-            cur_angle = ease_in_quart(current_time=self.elapsed_time,
+            cur_angle = Transition.ease_in_quart(current_time=self.elapsed_time,
                          start_value=self.start_angle,
                          change_in_value=self.change_in_value,
                          duration=self.duration)
             valid_transition = True
         if self.__transition == 'ease_in_expo':
-            cur_angle = ease_in_expo(current_time=self.elapsed_time,
+            cur_angle = Transition.ease_in_expo(current_time=self.elapsed_time,
                          start_value=self.start_angle,
                          change_in_value=self.change_in_value,
                          duration=self.duration)
             valid_transition = True
         if self.__transition == 'ease_in_quart':
-            cur_angle = ease_in_quart(current_time=self.elapsed_time,
+            cur_angle = Transition.ease_in_quart(current_time=self.elapsed_time,
                          start_value=self.start_angle,
                          change_in_value=self.change_in_value,
                          duration=self.duration)
             valid_transition = True
         if self.__transition == 'ease_in_quint':
-            cur_angle = ease_in_quint(current_time=self.elapsed_time,
+            cur_angle = Transition.ease_in_quint(current_time=self.elapsed_time,
                          start_value=self.start_angle,
                          change_in_value=self.change_in_value,
                          duration=self.duration)       
             valid_transition = True         
         if self.__transition == 'ease_in_sine':
-            cur_angle = ease_in_sine(current_time=self.elapsed_time,
+            cur_angle = Transition.ease_in_sine(current_time=self.elapsed_time,
                          start_value=self.start_angle,
                          change_in_value=self.change_in_value,
                          duration=self.duration)
