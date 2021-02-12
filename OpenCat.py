@@ -142,11 +142,13 @@ class Servo():
 
     @property
     def duration(self):
+        """ In microseconds """
         return self.__duration
     
     @duration.setter
-    def duration(self, value):
-        self.__duration = value
+    def duration(self, value_in_microseconds):
+        """ In microseconds """
+        self.__duration = value_in_microseconds
 
     @property 
     def duration_in_seconds(self):
@@ -160,10 +162,12 @@ class Servo():
 
     @property
     def elapsed_time(self):
+        """ In microseconds """
         return self.__current_time - self.__tick_start_time
 
     @property
     def elapsed_time_in_seconds(self):
+        """ In seconds """
         return self.elapsed_time / 1000000
 
 
@@ -215,10 +219,6 @@ class Servo():
         elapsed_time = self.elapsed_time
         if elapsed_time >= self.duration:
             return True
-        # print("Duration in MS is: ", self.duration)
-        # print("Start time is: ", self.__tick_start_time)
-        # print("Current time:", self.__current_time)
-        # print("Elapsed time = ", (self.elapsed_time_in_seconds))
         cur_angle = self.__current_angle
         valid_transition = False
         # print("transition type is: ", self.__transition)
@@ -289,6 +289,7 @@ class Servo():
 class Leg():
     
     __name = "leg"
+    stand = False
 
     def __init__(self, shoulder_pin, foot_pin, name=None):
         self.shoulder = Servo(name='shoulder', pin=shoulder_pin)
@@ -321,15 +322,20 @@ class Leg():
         self.shoulder.tick_start()
         self.foot.tick_start()
 
-        while self.shoulder.elapsed_time_in_seconds <= self.shoulder.duration_in_seconds:
-            # print("ticking...")
-            print(self.shoulder.name, self.shoulder.elapsed_time_in_seconds, self.shoulder.angle)
+    def stand_tick(self):
+
+        if self.shoulder.elapsed_time_in_seconds <= self.shoulder.duration_in_seconds:
+            self.stand_tick = False
+        else:
+            self.stand_tick = True
+
+        if not self.stand_tick:
             self.shoulder.tick()
             self.foot.tick()
-
-        # show current values
-        self.foot.show()
-        self.shoulder.show()
+        
+            # show current values
+            self.foot.show()
+            self.shoulder.show()
 
 class PicoCat():
     name = "PicoCat"
@@ -352,6 +358,10 @@ class PicoCat():
     def stand(self):   
         for servo in self.legs:
             servo.stand()
+
+        while not self.legs[0].stand_tick():
+            for servo in self.legs:
+                servo.stand_tick()
     
 
 cat = PicoCat()

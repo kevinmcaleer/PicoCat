@@ -24,6 +24,7 @@ class PCA9685():
     __angle = []
     __sda = Pin(0)
     __scl = Pin(1)
+    __current_channel = 0
 
     def __init__(self, pin=None) :
         '''I2C pin defaults to pin 1 if no value is passed .'''
@@ -39,6 +40,7 @@ class PCA9685():
             self.min_max(self._MINPULSE, self._MAXPULSE)
             for channel in range(0,15):
                 self.__angle[channel] = 90
+            print(self.__angle)
 
     def min_max(self, aMin, aMax ) :
         '''Set min/max and calculate range.'''
@@ -53,7 +55,7 @@ class PCA9685():
         return self.i2c.readfrom_mem(self.address, address, 1)[0]
 
     def reset(self):
-        self._write(0x00, 0x00) # Mode1
+        self.write(0x00, 0x00) # Mode1
 
     @property
     def frequency(self):
@@ -118,16 +120,28 @@ class PCA9685():
         self.setpwm(aServo, 0, val)
 
     @property
-    def angle(self, channel):
-        return self.__angle[channel]
+    def channel(self):
+        return self.__current_channel
+
+    @channel.setter
+    def channel(self, value):
+        if value >= 0 and value <= 15: 
+            self.__current_channel = value
+
+    @property
+    def angle(self):
+        return self.__angle[self.__current_channel]
 
     @angle.setter
-    def angle(self, channel, value):
+    def angle(self, value):
         '''Set angle -90 to +90.  < -90 is off.'''
         #((a + 90.0) * 100.0) / 180.0
         perc = int((value + 90.0) * 0.5556)  #Convert angle +/- 90 to 0-100%
-        self.__angle[channel] = value
-        self.set(channel, perc)
+        print(self.channel)
+        print(value)
+        print(self.__angle)
+        self.__angle[self.channel] = value
+        self.set(self.__current_channel, perc)
 
 
 def linear_tween(current_time, start_value, change_in_value, duration):
