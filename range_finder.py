@@ -1,7 +1,9 @@
 # Range Finder
 # PicoCat 2021
-#define echoPin 8 
-#define trigPin 7 
+
+# Note on a Pico the Range finder needs an input voltage of 5v, but a voltage divider across the returning Echo pin to make sure its only 3.3v
+# 1 1k and 2k resistor should achieve this
+
 
 from machine import Pin
 from time import sleep_us, ticks_us
@@ -15,10 +17,8 @@ class Range_Finder():
         # Initialise the Range Finder
         self.__echo_pin = Pin(echo_pin, Pin.IN)
         self.__trigger_pin = Pin(trigger_pin, Pin.OUT)
-        # print("Range Finder Enabled")
     
     def ping(self):
-        # print("Ping...")
         self.__trigger_pin.low()
         sleep_us(2)
         
@@ -33,13 +33,6 @@ class Range_Finder():
             signalon = ticks_us()
         elapsed_micros = signalon - signaloff
         self.duration = elapsed_micros
-        
-        # print(elapsed_micros)
-        # print("cm: ", (elapsed_micros * 0.343) /2 ) # /!\ have to check if this calc is ok.
-        # self.duration = elapsed_micros-start / 29 / 2 # in cm
-        # sleep_us(1000)
-        
-        # distance in mm
         self.distance = (elapsed_micros * 0.343) /2
         return self.distance 
 
