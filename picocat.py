@@ -133,7 +133,7 @@ class Leg():
     
     @name.setter
     def name(self, value):
-        self.__name = name 
+        self.__name = value 
 
 
     def __init__(self, shoulder_pin, foot_pin, name=None):
