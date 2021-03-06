@@ -100,7 +100,7 @@ class Servo():
             my_angle = map(value, 0, 180, 0, 65025)
             self.__pwm.duty_u16(my_angle)
             sleep(0.01)
-            print("the angle is now", self.angle)
+            # print("the angle is now", self.angle)
         else:
             print("The angle was too small or too large: ", value) 
     
@@ -143,6 +143,7 @@ class Leg():
             self.__name = name 
 
     def stand(self):
+        led = Pin(25, OUT)
         print("Standing Up leg", self.name)
         self.shoulder.__transition = "ease_in_sine"
         self.foot.__transition = "ease_in_sine"
@@ -158,6 +159,7 @@ class Leg():
         while self.shoulder.elapsed_time_in_seconds <= self.shoulder.duration_in_seconds:
             self.shoulder.tick()
             self.foot.tick()
+
 
 class PicoCat():
     name = "PicoCat"
@@ -193,3 +195,4 @@ class PicoCat():
 
 cat = PicoCat()
 cat.stand()
+sleep(1)
