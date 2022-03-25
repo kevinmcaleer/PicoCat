@@ -59,7 +59,8 @@ class Servo():
             cur_angle = Transition().ease_in_sine(current_time=self.elapsed_time, 
                                                   start_value=self.__start_value, 
                                                   change_in_value=self.__start_value-self.__target_angle,
-                                                  duration=self.__duration)
+                                                  duration=self.__duration, 
+                                                  start_time=ticks_us, target_angle=self.__target_angle)
             self.angle = int(cur_angle)
 
     def __init__(self, name=None, pin=None):
@@ -143,7 +144,7 @@ class Leg():
             self.__name = name 
 
     def stand(self):
-        led = Pin(25, OUT)
+        led = Pin(25, Pin.OUT)
         print("Standing Up leg", self.name)
         self.shoulder.__transition = "ease_in_sine"
         self.foot.__transition = "ease_in_sine"
@@ -177,7 +178,7 @@ class PicoCat():
         self.legs.append(back_left)
         self.legs.append(back_right)
 
-        print("*** ", self.name , " is Online ***")
+        print("*** ", self.name , "is Online ***")
 
     def stand(self):
         for servo in self.legs:
